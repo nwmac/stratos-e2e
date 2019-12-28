@@ -14,8 +14,8 @@ env:
 
 kube:
   storage_class:
-    persistent: "local-path-storage"
-    shared: "local-path-storage"
+    persistent: "local-path"
+    shared: "local-path"
 
   # The registry the images will be fetched from.
   # The values below should work for
