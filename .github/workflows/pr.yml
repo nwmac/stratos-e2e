@@ -15,15 +15,15 @@ jobs:
     - name: Install CF CLI
       id: install-cfcli
       run: |
-        wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
-        echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
-        sudo apt-get update
-        sudo apt-get install cf-cli
+        curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
+        chmod +x cf
+        mv cf /usr/local/bin
         cf version
 
     - name: Install CF dev
       id: install-cfdev
       run: |
+        cf version
         cf install-plugin -r CF-Community cfdev
         cf dev start
 
