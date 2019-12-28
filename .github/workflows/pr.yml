@@ -10,7 +10,7 @@ jobs:
     - name: setup-libvirt
       id: setup
       run: |
-        sudo apt install qemu-kvm libvirt-bin libvirt-doc 
+        apt-get install qemu-kvm libvirt-bin
 
     - name: Install CF CLI
       id: install-cfcli
