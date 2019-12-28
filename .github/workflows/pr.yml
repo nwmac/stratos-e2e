@@ -51,6 +51,10 @@ jobs:
         helm repo add suse https://kubernetes-charts.suse.com
         helm search suse
         helm install suse/uaa --name susecf-uaa --namespace uaa -f ./hack/github/scf-values.yaml
-        kubectl wait --for=condition=Ready pods -n uaa --all --timeout=10m
+        sleep 10
         kubectl get po -A
-        
+        sleep 120
+        kubectl get po -A
+        sleep 120
+        kubectl get po -A
+        sleep 120
