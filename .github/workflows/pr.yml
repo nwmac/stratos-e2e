@@ -26,7 +26,7 @@ jobs:
       id: install-cfdev
       run: |
         cf version
-        cf install-plugin -r CF-Community cfdev
+        cf install-plugin -f -r CF-Community cfdev
         cf dev start
 
 
