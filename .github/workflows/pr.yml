@@ -18,7 +18,8 @@ jobs:
       run: |
         curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
         chmod +x cf
-        mv cf /usr/local/bin
+        env
+        sudo mv cf /usr/local/bin
         cf version
 
     - name: Install CF dev
