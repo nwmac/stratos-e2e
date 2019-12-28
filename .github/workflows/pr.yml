@@ -36,9 +36,21 @@ jobs:
       id: helm-install
       run: |
         export KUBECONFIG="$(kind get kubeconfig-path)"
-        helm init
+        kubectl apply -f ./hack/github/helm-rbac.yaml
+        helm init --service-account=tiller
         sleep 20
         kubectl get po -A
         helm list
         pwd
         ls -al
+
+    - name: Install SCF
+      id: scf-install
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        helm repo add suse https://kubernetes-charts.suse.com
+        helm search suse
+        helm install suse/uaa --name susecf-uaa --namespace uaa -f ./hack/github/scf-values.yaml
+        kubectl wait --for=condition=Ready pods -n uaa --all --timeout=10m
+        kubectl get po -A
+        
