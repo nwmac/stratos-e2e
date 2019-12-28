@@ -35,9 +35,7 @@ jobs:
     - name: Install Helm
       id: helm-install
       run: |
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
-        chmod 700 get_helm.sh
-        ./get_helm.sh
+        export KUBECONFIG="$(kind get kubeconfig-path)"
         helm init
         sleep 20
         kubectl get po -A
