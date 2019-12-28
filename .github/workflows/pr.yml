@@ -44,17 +44,20 @@ jobs:
         pwd
         ls -al
 
-    - name: Install SCF
-      id: scf-install
+    - name: Install UAA
+      id: uaa-install
       run: |
         export KUBECONFIG="$(kind get kubeconfig-path)"
         helm repo add suse https://kubernetes-charts.suse.com
         helm search suse
         helm install suse/uaa --name susecf-uaa --namespace uaa -f ./hack/github/scf-values.yaml
         sleep 10
-        kubectl get po -A
-        sleep 120
-        kubectl get po -A
-        sleep 120
-        kubectl get po -A
-        sleep 120
+
+    - name: Wait for UAA
+      id: uaa-wait
+      run: |
+        export KUBECONFIG="$(kind get kubeconfig-path)"
+        ./hack/github/waitforpods.sh uaa
+        kubectl get po -n uaa
+        echo "UAA is ready"
+        kubectl get services -n uaa
