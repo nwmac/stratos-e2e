@@ -13,7 +13,7 @@ jobs:
         go-version: 1.13
       id: go
 
-    - name: Check out code into the Go module directory
+    - name: Check out code
       uses: actions/checkout@v1
 
     - name: Create Kubernetes Cluster
@@ -31,3 +31,16 @@ jobs:
         kubectl delete storageclass --all
         kubectl apply -f https://github.com/rancher/local-path-provisioner/raw/master/deploy/local-path-storage.yaml
         kubectl wait --for=condition=Ready pods -n local-path-storage --all --timeout=5m
+
+    - name: Install Helm
+      id: helm-install
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
+        chmod 700 get_helm.sh
+        ./get_helm.sh
+        helm init
+        sleep 20
+        kubectl get po -A
+        helm list
+        pwd
+        ls -al
