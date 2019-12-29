@@ -27,6 +27,7 @@ jobs:
       run: |
         cf version
         cf install-plugin -f -r CF-Community cfdev > /dev/null
+        cf dev telemetry --off
         cf dev start
 
 
